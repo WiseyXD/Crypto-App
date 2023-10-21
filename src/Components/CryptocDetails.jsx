@@ -21,10 +21,13 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 
 export default function CryptocDetails() {
-	const params = useParams();
-	const { coinId } = params;
+	const { coinId } = useParams();
+
 	const { data, isFetching } = useGetCryptosDetailsQuery(coinId);
+	console.log(data);
+
 	const [timeperiod, setTimeperiod] = useState("7d");
+	console.log(data);
 	const cryptoDetails = data?.data?.coin;
 	console.log(cryptoDetails);
 	const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
