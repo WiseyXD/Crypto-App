@@ -38,7 +38,7 @@ export default function Cryptocurrencies({ simplified }) {
 			<Row gutter={[32, 32]} className="crypto-card-container">
 				{cryptos?.map((currency, i) => (
 					<Col className="crypto-card" key={i} xs={24} sm={12} lg={6}>
-						<Link to={`/crypto/${currency.id}`}>
+						<Link to={`/crypto/${currency.uuid}`}>
 							<Card
 								title={`${currency.rank} . ${currency.name}`}
 								extra={

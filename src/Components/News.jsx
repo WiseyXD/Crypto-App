@@ -13,7 +13,7 @@ export default function News({ simplified }) {
 	const { data } = useGetCryptosQuery(100);
 	const { data: cryptoNews } = useGetNewsQuery({
 		newsCategory,
-		count: simplified ? 6 : 12,
+		count: simplified ? 6 : 20,
 	});
 
 	//   if (!cryptoNews?.value) return <Loader />;
