@@ -22,8 +22,8 @@ const { Option } = Select;
 
 export default function CryptocDetails() {
 	const { coinId } = useParams();
-
-	const { data, isFetching } = useGetCryptosDetailsQuery(coinId);
+	//Api not workin
+	const { data } = useGetCryptosDetailsQuery(coinId);
 	console.log(data);
 
 	const [timeperiod, setTimeperiod] = useState("7d");
