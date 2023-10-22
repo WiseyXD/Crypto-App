@@ -101,6 +101,10 @@ export default function CryptocDetails() {
 		},
 	];
 
+	if (cryptoDetails === undefined) {
+		return "loading ....";
+	}
+
 	return (
 		<Col className="coin-detail-container">
 			<Col className="coin-heading-container">
