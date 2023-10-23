@@ -19,11 +19,12 @@ import { useGetCryptosDetailsQuery } from "../Services/CryptoAPI";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
+//Asd
 
 export default function CryptocDetails() {
 	const { coinId } = useParams();
 	//Api not workin
-	const { data } = useGetCryptosDetailsQuery(coinId);
+	const { data, isFetching } = useGetCryptosDetailsQuery(coinId);
 	console.log(data);
 
 	const [timeperiod, setTimeperiod] = useState("7d");
@@ -101,7 +102,7 @@ export default function CryptocDetails() {
 		},
 	];
 
-	if (cryptoDetails === undefined) {
+	if (isFetching) {
 		return "loading ....";
 	}
 
