@@ -19,7 +19,7 @@ import { useGetCryptosDetailsQuery } from "../Services/CryptoAPI";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
-//Asd
+//AsdDADSA
 
 export default function CryptocDetails() {
 	const { coinId } = useParams();
