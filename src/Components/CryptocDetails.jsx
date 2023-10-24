@@ -15,19 +15,25 @@ import {
 	ThunderboltOutlined,
 } from "@ant-design/icons";
 
-import { useGetCryptosDetailsQuery } from "../Services/CryptoAPI";
+import {
+	useGetCryptosDetailsQuery,
+	useGetCryptosHistoryQuery,
+} from "../Services/CryptoAPI";
+
+import LineChart from "./LineChart";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
-//AsdDADSA
 
 export default function CryptocDetails() {
+	const [timePeriod, setTimePeriod] = useState("7d");
 	const { coinId } = useParams();
 	//Api not workin
 	const { data, isFetching } = useGetCryptosDetailsQuery(coinId);
-	console.log(data);
+	const { data: coinHistory } = useGetCryptosHistoryQuery(coinId, timePeriod);
 
-	const [timeperiod, setTimeperiod] = useState("7d");
+	console.log(coinHistory);
+
 	console.log(data);
 	const cryptoDetails = data?.data?.coin;
 	console.log(cryptoDetails);
@@ -121,12 +127,73 @@ export default function CryptocDetails() {
 				defaultValue="7d"
 				className="select-timeperiod"
 				placeholder="Select Timeperiod"
-				onChange={(value) => setTimeperiod(value)}
+				onChange={(value) => setTimePeriod(value)}
 			>
 				{time.map((date) => (
 					<Option key={date}>{date}</Option>
 				))}
 			</Select>
+			<LineChart
+				coinHistory={coinHistory}
+				currentPrice={millify(cryptoDetails.price)}
+				coinName={cryptoDetails.name}
+			/>
+			<Col className="stats-container">
+				<Col className="coin-value-statistics">
+					<Col className="coin-value-statistics-heading">
+						<Title level={3}>
+							{cryptoDetails.name} Value Statistics
+						</Title>
+						<p>An Overview Showing Stats of {cryptoDetails.name}</p>
+					</Col>
+					{stats.map(({ icon, title, value }) => (
+						<Col key={value} className="coin-stats">
+							<Col className="coin-stats-name">
+								<Text>{icon}</Text>
+								<Text>{title}</Text>
+							</Col>
+							<Text className="stats">{value}</Text>
+							{/* <Text></Text> */}
+						</Col>
+					))}
+				</Col>
+				<Col className="other-stats-info">
+					<Col className="coin-value-statistics-heading">
+						<Title level={3}>Other Statistics</Title>
+					</Col>
+					{genericStats.map(({ icon, title, value }) => (
+						<Col key={value} className="coin-stats">
+							<Col className="coin-stats-name">
+								<Text>{icon}</Text>
+								<Text>{title}</Text>
+							</Col>
+							<Text className="stats">{value}</Text>
+							{/* <Text></Text> */}
+						</Col>
+					))}
+				</Col>
+			</Col>
+			<Col className="coin-desc-link">
+				<Row className="coin-desc">
+					<Title level={3} className="coin-details-heading">
+						What is {cryptoDetails.name}
+						{HTMLReactParser(cryptoDetails.description)}
+					</Title>
+				</Row>
+				<Col className="coin-links">
+					<Title>{cryptoDetails.name} Links</Title>
+					{cryptoDetails.links.map((link) => (
+						<Row className="coin-link" key={link.name}>
+							<Title level={5} className="link-name">
+								{link.type}
+							</Title>
+							<a href={link.url} target="_blank" rel="norefer">
+								{link.name}
+							</a>
+						</Row>
+					))}
+				</Col>
+			</Col>
 		</Col>
 	);
 }
