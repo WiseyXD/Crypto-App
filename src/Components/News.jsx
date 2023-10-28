@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Shimmer from "./Shimmer";
 import { useGetNewsQuery } from "../Services/CryptoNewsAPI";
 import { useGetCryptosQuery } from "../Services/CryptoAPI";
 import { Select, Typography, Row, Col, Avatar, Card } from "antd";
@@ -11,12 +12,12 @@ const demoImg = "https://i.ibb.co/Z11pcGG/cryptocurrency.png";
 export default function News({ simplified }) {
 	const [newsCategory, setNewsCategory] = useState("Cryptocurrency");
 	const { data } = useGetCryptosQuery(100);
-	const { data: cryptoNews } = useGetNewsQuery({
+	const { data: cryptoNews, isFetching } = useGetNewsQuery({
 		newsCategory,
 		count: simplified ? 6 : 20,
 	});
 
-	//   if (!cryptoNews?.value) return <Loader />;
+	if (isFetching) return <Shimmer />;
 
 	return (
 		<Row gutter={[24, 24]}>

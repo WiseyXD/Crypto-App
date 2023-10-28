@@ -20,17 +20,20 @@ import {
 	useGetCryptosHistoryQuery,
 } from "../Services/CryptoAPI";
 
+import Shimmer from "./Shimmer";
+
 import LineChart from "./LineChart";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
 export default function CryptocDetails() {
-	const [timePeriod, setTimePeriod] = useState("7d");
+	const [timePeriod, setTimePeriod] = useState("5y");
 	const { coinId } = useParams();
 
 	const { data, isFetching } = useGetCryptosDetailsQuery(coinId);
-	const { data: coinHistory } = useGetCryptosHistoryQuery(coinId, timePeriod);
+	const { data: coinHistory, isFetching: isFetch2 } =
+		useGetCryptosHistoryQuery(coinId, timePeriod);
 
 	console.log(coinHistory);
 
@@ -109,7 +112,7 @@ export default function CryptocDetails() {
 	];
 
 	if (isFetching) {
-		return "loading ....";
+		return <Shimmer />;
 	}
 
 	return (
@@ -127,17 +130,25 @@ export default function CryptocDetails() {
 				defaultValue="7d"
 				className="select-timeperiod"
 				placeholder="Select Timeperiod"
-				onChange={(value) => setTimePeriod(value)}
+				onChange={(value) => {
+					setTimePeriod(value);
+					console.log(value);
+				}}
 			>
 				{time.map((date) => (
 					<Option key={date}>{date}</Option>
 				))}
 			</Select>
-			<LineChart
-				coinHistory={coinHistory}
-				currentPrice={millify(cryptoDetails.price)}
-				coinName={cryptoDetails.name}
-			/>
+			{isFetch2 ? (
+				"Loading ..."
+			) : (
+				<LineChart
+					coinHistory={coinHistory}
+					currentPrice={millify(cryptoDetails.price)}
+					coinName={cryptoDetails.name}
+				/>
+			)}
+
 			<Col className="stats-container">
 				<Col className="coin-value-statistics">
 					<Col className="coin-value-statistics-heading">

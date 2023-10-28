@@ -3,6 +3,8 @@ import millify from "millify";
 import { Link } from "react-router-dom";
 import { Card, Row, Col, Input } from "antd";
 
+import Shimmer from "./Shimmer";
+
 import { useGetCryptosQuery } from "../Services/CryptoAPI";
 import { useEffect } from "react";
 
@@ -21,7 +23,7 @@ export default function Cryptocurrencies({ simplified }) {
 	}, [cryptosList, search]);
 
 	if (isFetching) {
-		return "Loading.....";
+		return <Shimmer />;
 	}
 
 	return (

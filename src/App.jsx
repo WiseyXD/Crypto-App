@@ -12,7 +12,6 @@ import {
 	Cryptocurrencies,
 	CryptoDetails,
 	News,
-	// A
 } from "./Components";
 function App() {
 	return (
