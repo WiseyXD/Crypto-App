@@ -12,7 +12,7 @@ import {
 	Cryptocurrencies,
 	CryptoDetails,
 	News,
-	// Asd
+	// A
 } from "./Components";
 function App() {
 	return (
