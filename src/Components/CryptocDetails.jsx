@@ -132,7 +132,6 @@ export default function CryptocDetails() {
 				placeholder="Select Timeperiod"
 				onChange={(value) => {
 					setTimePeriod(value);
-					console.log(value);
 				}}
 			>
 				{time.map((date) => (
@@ -188,7 +187,8 @@ export default function CryptocDetails() {
 				<Row className="coin-desc">
 					<Title level={3} className="coin-details-heading">
 						What is {cryptoDetails.name}
-						{HTMLReactParser(cryptoDetails.description)}
+						<br />
+						<h4>{HTMLReactParser(cryptoDetails.description)}</h4>
 					</Title>
 				</Row>
 				<Col className="coin-links">
